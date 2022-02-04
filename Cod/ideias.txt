@@ -1,0 +1,1 @@
+inserir o cod dentro de uma funçao para que não pare ate o user pedir para parar 
