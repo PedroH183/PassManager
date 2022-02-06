@@ -51,7 +51,25 @@ def runnig(conn, cur, num):
             break
     else:
         erro()
+
+    re_running(conn, cur)
     return
+
+def re_running(conexao, cursor):
+    while True:
+        choice = ['y','n']
+        desire = str(input('Voce quer rodar o script novamente ?[Y/N]')).lower()
+        if desire not in choice:
+            continue
+        if desire == 'n':
+            return
+        else:
+            global numero # trabalhando com o escopo 
+            global escolha
+            print(escolha)
+            numero = input()
+            runnig(conexao, cursor, numero)
+
 
 def erro():
     print(f"""Erro Operacional possíveis causa ::
@@ -64,17 +82,19 @@ def erro():
 dbname = str(input('Digite o nome do banco de dados\n'))
 usuario= str(input('Digite o nome do Usuario que vai logar no DB\n'))
 pass_user = str(input('Digite a senha do user\n'))
-numero = str(input("""
+escolha = str("""
 Escolha a opção que melhor descrever seu objetivo:
 1--Salvar uma conta
 2--Apagar uma conta
-3--Consultar conta\n"""))
+3--Consultar conta\n""")
+print(escolha)
+numero = input()
 
 try:
     connect = psy.connect(host='localhost',user=usuario,password=pass_user,database=dbname)
     cursor = connect.cursor()
     runnig(connect, cursor, numero)
-    
+
 except:
     erro()
 
