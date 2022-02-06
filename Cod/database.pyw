@@ -44,7 +44,8 @@ def runnig(conn, cur, num):
             conta=str(input('Digite a conta que deseja copiar senha\n'))
             if conta == '':
                 continue
-            cur.execute(f"SELECT senha FROM contas WHERE email = '{conta}';")
+            cur.execute(f"SELECT senha FROM contas WHERE email = '{conta}';") 
+            ## listar as opçaões (implementar)
             passw = cur.fetchall()
             pyr.copy(str(passw[0][0]))
             print('Senha copiada para o clipboard')
@@ -61,14 +62,14 @@ def re_running(conexao, cursor):
         desire = str(input('Voce quer rodar o script novamente ?[Y/N]')).lower()
         if desire not in choice:
             continue
-        if desire == 'n':
-            return
-        else:
+        if desire == 'y':
             global numero # trabalhando com o escopo 
             global escolha
             print(escolha)
             numero = input()
             runnig(conexao, cursor, numero)
+        else:
+            return
 
 
 def erro():
