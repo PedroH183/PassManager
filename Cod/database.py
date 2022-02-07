@@ -34,7 +34,8 @@ def runnig(conn, cur, num):
     if num == '1':#salvar uma conta
         while True:
             email = str(input('Digite o email que deseja salvar\n'))
-            senha = str(input('Digite a senha que deseja salvar\n'))
+            senha = str(input('Digite a senha que deseja salvar\n')) 
+            ## send to hash.py for encrypt password 
             if (email == '' or senha ==''):
                 print('não deixe campos em branco')
                 continue

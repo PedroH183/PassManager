@@ -1,4 +1,5 @@
 inserir o cod dentro de uma funçao para que não pare ate o user pedir para parar [OK]
-printar a lista de contas salvas para não digitar o email completo [] 
+printar a lista de contas salvas para não digitar o email completo [OK] 
 consulta inexistente re-exibir com a variavel salva para inserir no save [] 
+inserir hash no banco de dados para evitar possiveis intrusos []
 
