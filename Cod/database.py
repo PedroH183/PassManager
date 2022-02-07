@@ -4,8 +4,22 @@
 # Use o passManager.bat para rodar o script
 
 import psycopg2 as psy
-import sys as sy
-import pyperclip as pyr
+from pyperclip import copy 
+from inicio import entrada,opcao
+from sys import exit
+
+def print_select(conexao, cursor):
+    cursor.execute(f'SELECT id, email FROM contas;')
+    dados = cursor.fetchall()
+    print('*'*25+ 'Contas' +'*'*25)
+    if len(dados)<1:
+        print('Lista vazia...')
+        print('*'*25+ 'Contas' +'*'*25)
+        re_running(conexao, cursor)
+    for row in dados:
+        print(row)
+    print('*'*25+ 'Contas' +'*'*25)
+    return
 
 def runnig(conn, cur, num): 
 #Criando a tabela que armazenará suas contas 
@@ -30,32 +44,35 @@ def runnig(conn, cur, num):
         print('conta salva')
 
     elif num == '2': # apagar uma conta 
+        print_select(conn, cur)
         while True:
-            conta = str(input('Digite a conta que deseja apagar\n'))
-            if conta =='':
+            cod = int(input('Digite o id da conta que deseja apagar\n'))
+            if cod == '':
                 continue
-            cur.execute(f"DELETE FROM contas WHERE email = '{conta}';")
+            cur.execute(f"DELETE FROM contas WHERE id = {cod}")
             conn.commit()
             break
         print('Conta apagada')
 
     elif num == '3': # consulta 
+        # inserindo o print de lista 
+        print_select(conn,cur)
         while True:
-            conta=str(input('Digite a conta que deseja copiar senha\n'))
+            conta=str(input('Digite o id da conta que deseja copiar senha\n'))
             if conta == '':
                 continue
-            cur.execute(f"SELECT senha FROM contas WHERE email = '{conta}';") 
+            cur.execute(f"SELECT senha FROM contas WHERE id = '{conta}';") 
             ## listar as opçaões (implementar)
             passw = cur.fetchall()
-            pyr.copy(str(passw[0][0]))
+            copy(str(passw[0][0])) # tupla de listas 
             print('Senha copiada para o clipboard')
             break
     else:
         erro()
-
+    
     re_running(conn, cur)
-    return
 
+    
 def re_running(conexao, cursor):
     while True:
         choice = ['y','n']
@@ -63,42 +80,40 @@ def re_running(conexao, cursor):
         if desire not in choice:
             continue
         if desire == 'y':
-            global numero # trabalhando com o escopo 
-            global escolha
+            escolha = opcao()
             print(escolha)
-            numero = input()
-            runnig(conexao, cursor, numero)
+            runnig(conexao, cursor, escolha)
+        elif desire == 'n':
+            cursor.close()
+            conexao.close()
+            exit('Bye...')
         else:
-            return
+            print('erro de interpretação')
 
 
 def erro():
     print(f"""Erro Operacional possíveis causa ::
               Seu DB está rodando ?
               O nome do DB está correto ?
-              Seu user está cadastrado ?""")
-    sy.exit()
+              Seu user está cadastrado ?
+              A função correta ?""")
+    exit()
 
 # menu de entrada
-dbname = str(input('Digite o nome do banco de dados\n'))
-usuario= str(input('Digite o nome do Usuario que vai logar no DB\n'))
-pass_user = str(input('Digite a senha do user\n'))
-escolha = str("""
-Escolha a opção que melhor descrever seu objetivo:
-1--Salvar uma conta
-2--Apagar uma conta
-3--Consultar conta\n""")
-print(escolha)
-numero = input()
+dbname, usuario, pass_user = entrada()
 
 try:
     connect = psy.connect(host='localhost',user=usuario,password=pass_user,database=dbname)
     cursor = connect.cursor()
-    runnig(connect, cursor, numero)
+    print('Voce está dentro')
+    escolha = opcao()
+    runnig(connect, cursor, escolha)
 
-except:
-    erro()
+except (Exception, psy.Error) as e:
+    print('Erro ao tentar conectar ao banco de dados')
 
 finally:
+    print('Bye..')
     cursor.close() # evitando perda de memoria
     connect.close()
+    exit()
