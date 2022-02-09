@@ -5,11 +5,13 @@
 def entrada():
     dbname = 'contas'
     usuario= 'tester'
-    pass_user = str(input(f'Digite a senha do user :: {usuario}\n'))
+    pass_user = '123456'
     return dbname, usuario, pass_user
 
 def opcao():
-    print((f"""
+    list_choice = ['1','2','3']
+    while True:
+        print((f"""
 {'*'*25}Menu{'*'*25}    
 Escolha uma função para o programa
 1--Salvar uma conta
@@ -17,5 +19,10 @@ Escolha uma função para o programa
 3--Consultar conta
 {'*'*25}Menu{'*'*25}
 """))
-    escolha = str(input())
+        escolha = str(input())
+        if escolha not in list_choice:
+            print('INSIRA UM VALOR VÁLIDO !!')
+            continue
+        else:
+            break
     return escolha
