@@ -9,7 +9,7 @@ def rd_pass():
     digits = st.digits
     punctuation = st.punctuation
 
-    # senha com mais de 10 caracteres e 
+    # senha com 8 ou mais caracteres
     len_letter = rd.randint(8,10)
     len_digits = rd.randint(4,6)
     len_simbol = rd.randint(3,5)
