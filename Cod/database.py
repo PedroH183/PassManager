@@ -32,9 +32,9 @@ def runnig(conn, cur, num):
     cur.execute("""
     CREATE TABLE IF NOT EXISTS contas(
     id Serial,
-    email varchar(30),
-    senha varchar(70) NOT NULL,
-    app_name varchar(30) NOT NULL,
+    email varchar(30) NOT NULL,
+    senha varchar(300) NOT NULL,
+    app_name varchar(10) NOT NULL,
     PRIMARY KEY(id));""")
     conn.commit() # atualizações pertinentes ao DB
 
@@ -48,7 +48,7 @@ def runnig(conn, cur, num):
             copy(senha)
             senha = encrypt(senha) # encriptação 
 
-            if (email == ''):
+            if (email == '' or app == ''):
                 print('não deixe campos em branco')
                 continue
 
@@ -82,7 +82,7 @@ def runnig(conn, cur, num):
 
             cur.execute(f"SELECT senha FROM contas WHERE id = '{conta}';") 
             passw = cur.fetchone() # avaliar funcionamento
-            passw = passw[0][0]
+            passw = passw[0]
             
             passw = decrypt(passw) # tupla de lista
              
