@@ -11,20 +11,25 @@ from encrypt import encrypt, decrypt
 from randomPass import rd_pass
 
 def print_select(conexao, cursor):
+
     cursor.execute(f'SELECT id, email FROM contas;')
     dados = cursor.fetchall()
+
     mssg =('*'*25+ 'Contas' +'*'*25)
     print(mssg)
+
     if len(dados)<1:
         print('Lista vazia...')
         print(mssg)
         re_running(conexao, cursor)
+
     for row in dados:
         if type(row) == tuple:
             row = list(row)
             print(row)
-        print(row)
+
     print(mssg)
+
     return
 
 def runnig(conn, cur, num): 
@@ -63,16 +68,20 @@ def runnig(conn, cur, num):
     elif num == '2': # apagar uma conta 
         print_select(conn, cur)
         while True:
+
             cod = int(input('Digite o id da conta que deseja apagar\n'))
             if cod == '' or type(cod) != int:
                 continue
+
             cur.execute(f"DELETE FROM contas WHERE id = {cod}")
             conn.commit()
+
             break
         print('Conta apagada')
 
     elif num == '3': # consulta 
         # inserindo o print de lista 
+
         print_select(conn,cur)
         while True:
             
@@ -85,8 +94,9 @@ def runnig(conn, cur, num):
             passw = passw[0]
             
             passw = decrypt(passw) # tupla de lista
-             
+            copy(passw)
             print('Senha copiada para o clipboard')
+
             break
     else:
         erro()
@@ -98,16 +108,20 @@ def re_running(conexao, cursor):
     while True:
         choice = ['y','n']
         desire = str(input('Voce quer rodar o script novamente ?[Y/N]')).lower()
+
         if desire not in choice:
             continue
+
         if desire == 'y':
             escolha = opcao()
             print(escolha)
             runnig(conexao, cursor, escolha)
+
         elif desire == 'n':
             cursor.close()
             conexao.close()
             exit('Bye...')
+            
         else:
             print('erro de interpretação')
 

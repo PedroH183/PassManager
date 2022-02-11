@@ -20,9 +20,11 @@ Escolha uma função para o programa
 {'*'*25}Menu{'*'*25}
 """))
         escolha = str(input())
+
         if escolha not in list_choice:
             print('INSIRA UM VALOR VÁLIDO !!')
             continue
+        
         else:
             break
     return escolha

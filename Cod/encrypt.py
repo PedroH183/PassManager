@@ -26,7 +26,8 @@ def decrypt(passwd): # using private key
     
     decrypt_pass = bs.b32decode(passwd)
     decrypt_pass = rsa.decrypt(decrypt_pass, priv)
-
+    decrypt_pass = decrypt_pass.decode()
+    
     return decrypt_pass
 
 # save a pub and private key in a file verify the documentation of RSA ...
