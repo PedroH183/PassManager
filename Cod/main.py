@@ -8,7 +8,7 @@ import psycopg2 as psy
 from inicio import entrada,opcao
 from sys import exit
 from encrypt import generatekeys_save
-from function import run,re_run
+from function import run
 
 #################### MENU ##################
 
@@ -23,7 +23,6 @@ try:
     print('DB CONNECT')
     escolha = opcao()
     run(connect, cursor, escolha)
-    re_run(connect,cursor)
 
 except (Exception, psy.Error):
     print('FAIL IN CONNECT DB...')

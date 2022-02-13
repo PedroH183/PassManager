@@ -6,7 +6,7 @@ consulta inexistente re-exibir com a variavel salva para inserir no save []
 inserir hash no banco de dados para evitar possiveis intrusos [FALSE]
 melhorar o print (tirar o print de tuplas )[OK]
 verificar se os hash pode dar problema com o armazenamento [OK]
-fazer ele ler se há as keys []
+fazer ele ler se há as keys [OK]
 verificar boas praticas do psycopg2[]
-verificar novas formas de avaliar valores [ok] 
+verificar novas formas de avaliar valores [] ... 
 

@@ -6,7 +6,6 @@ import inicio
 from pyperclip import copy
 from randomPass import rd_pass
 
-
 def save(conn,cur):
     """SAVE A ACCOUNT IN DATABASE"""
     
@@ -36,14 +35,13 @@ def save(conn,cur):
 def delete(conn,cur):
     """DELETE ACCOUNT IN DATABASE BY ID"""
 
-    dados = printer(cur) # print account storaged
+    dados = printer(conn, cur) # print account storaged
+
+    if len(dados) == 0:
+        print('NÃO TEM DELETE, DB VAZIO')
+        re_run(conn, cur)
 
     while True:
-
-        if len(dados) == 0:
-            print('LISTA VAZIA')
-            re_run(conn, cur)
-
         try:
             cod = int(input('Digite o id da conta que deseja apagar\n'))
 
@@ -60,27 +58,26 @@ def delete(conn,cur):
     return
         
 
-def printer(cur):
+def printer(conn,cur):
     """PRINT THE VALUES STORAGED IN DB"""
 
-    cur.execute(f'SELECT id, email FROM contas;')
+    cur.execute(f'SELECT id, email FROM contas')
     dados = cur.fetchall() # tuple return
 
-    print('*'*25+ 'Contas' +'*'*25)
-    
     if len(dados) == 0:
         print('LISTA VAZIA')
-        return # falling in re_run the program 
+        re_run(conn,cur)
 
+    print('*'*25+ 'Contas' +'*'*25)
     [print(list(row)) for row in dados]    
     print('*'*25+ 'Contas' +'*'*25)
-    
-    return 
 
-def query(cur):
+    return dados
+
+def query(conn,cur):
     """CONSULT THE VALUES STORAGED IN DB FOR COPY PASSWORD"""
 
-    printer(cur) # take id return of contas table
+    printer(conn,cur) # take id return of contas table
 
     datas = []
 
@@ -89,6 +86,10 @@ def query(cur):
 
     for row in linhas:
         datas.append(row[0])
+
+    if len(linhas) == 0:
+        print('NÃO TEM CONSULTA, DB VAZIO')
+        re_run(conn,cur)
 
     while True:
             
@@ -114,6 +115,7 @@ def re_run(conn, cur):
     """ASK IF WANT RE RUN THE PROGRAM"""
 
     while True:
+
         choice = ['y','n']
         desire = str(input('Voce quer rodar o script novamente ?[Y/N]')).lower()
 
@@ -122,7 +124,6 @@ def re_run(conn, cur):
 
         if desire == 'y':
             escolha = inicio.opcao()
-            print(escolha)
             run(conn, cur, escolha) # database.py
 
         elif desire == 'n':
@@ -161,7 +162,7 @@ def run(conn, cur, choice):
         delete(conn,cur)
 
     elif choice == '3': # COPY THE PASSWORD STORAGED IN DB
-        query(cur)
+        query(conn,cur)
     
 
     return 
