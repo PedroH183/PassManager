@@ -1,2 +1,2 @@
-@py.exe ./Cod\database.py
+@py.exe ./Cod\main.py
 @pause

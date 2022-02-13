@@ -1,10 +1,14 @@
 #! python3 
 # don't save plain text in DB 
 
+import os
 import rsa
 import base64 as bs
 
+
 def encrypt(passwd): # using public key 
+    """ENCRYPT THE PASSWORD FOR STORAGE IN DATABASE"""
+
     passwd = passwd.encode()
     
     with open('./Cod\keys\pubkey.pem', mode='rb') as pub:
@@ -12,13 +16,15 @@ def encrypt(passwd): # using public key
 
     encry_pass = rsa.encrypt(passwd, pub)
     encry_pass = bs.b32encode(encry_pass) 
-    # thi is very important for storage a value in db
+    # this is very important for storage a value in db
     encry_pass = encry_pass.decode()
 
     return encry_pass
 
 
 def decrypt(passwd): # using private key
+    """DECRYPT THE PASSWORD STORAGED IN DB"""
+
     passwd = passwd.encode()
 
     with open('./Cod\keys\privkey.pem', mode='rb') as priv:
@@ -30,13 +36,21 @@ def decrypt(passwd): # using private key
     
     return decrypt_pass
 
-# save a pub and private key in a file verify the documentation of RSA ...
-# call the generatekeys_saves if you don't have a dir key 
-def generatekeys_save():
-    (pubKey,privKey) = rsa.newkeys(1024,poolsize=4)
+def generatekeys_save(value):
+    """MAKE THE DIRECTORY KEYS WITH KEY PUBLIC AND PRIVATE FOR ENCRYPT PASSWD IN DB"""
 
-    with open('./Cod\keys\pubkey.pem', mode='wb') as file:
+    if value:
+        return
+
+    (pubKey,privKey) = rsa.newkeys(2048)
+
+    os.makedirs(os.getcwd()+'\\Cod\\keys') # create all directorys to the keys
+    os.chdir('Cod\keys')
+
+    with open('pubkey.pem', mode='ab+') as file: # create file pub and priv keys in dir keys ...
         file.write(pubKey.save_pkcs1('PEM'))
     
-    with open('./Cod\keys\privkey.pem', mode='wb') as file:
+    with open('privkey.pem', mode='ab+') as file:
         file.write(privKey.save_pkcs1('PEM'))
+    
+    return

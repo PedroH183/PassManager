@@ -5,6 +5,8 @@ import random as rd
 import string as st
 
 def rd_pass():
+    """RETURN A RANDOM PASSWORD WITH LETTER, DIGITS AND PUNCTUATION"""
+    
     letters = st.ascii_letters
     digits = st.digits
     punctuation = st.punctuation
