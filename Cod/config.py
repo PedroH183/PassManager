@@ -3,7 +3,16 @@
 
 # modifique de acordo com seu db e user ...
 def entrada():
-    """PROPIERTIES OF DB FOR CONNECT """
+
+    """PROPIERTIES OF DB FOR CONNECT 
+    
+    dbaname = str, is your database name
+    usuario = str, the user that registered in your database 
+    pass_user = str, the password of your user registered in your data base
+
+    returns the values for connect in main.py 
+
+    """
 
     dbname = 'contas'
     usuario= 'tester'
@@ -11,7 +20,13 @@ def entrada():
     return dbname, usuario, pass_user
 
 def opcao():
-    """LIST THE OPTIONS POSSIBLE IN PROGRAM"""
+
+    """LIST THE OPTIONS POSSIBLE IN PROGRAM
+    
+    escolha = is a choice for run the program 
+
+    returns the escolha for main.py 
+    """
 
     list_choice = ['1','2','3']
     

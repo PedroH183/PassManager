@@ -7,7 +7,10 @@ import base64 as bs
 
 
 def encrypt(passwd): # using public key 
-    """ENCRYPT THE PASSWORD FOR STORAGE IN DATABASE"""
+    """ENCRYPT THE PASSWORD FOR STORAGE IN DATABASE
+    
+    returns the password encrypted with rsa and encode with 32 base 
+    """
 
     passwd = passwd.encode()
     
@@ -23,7 +26,10 @@ def encrypt(passwd): # using public key
 
 
 def decrypt(passwd): # using private key
-    """DECRYPT THE PASSWORD STORAGED IN DB"""
+    """DECRYPT THE PASSWORD STORAGED IN DB
+    
+    returns decrypt password storaged in db and decode the 32 base for copy for clipboard
+    """
 
     passwd = passwd.encode()
 
@@ -37,7 +43,10 @@ def decrypt(passwd): # using private key
     return decrypt_pass
 
 def generatekeys_save(value):
-    """MAKE THE DIRECTORY KEYS WITH KEY PUBLIC AND PRIVATE FOR ENCRYPT PASSWD IN DB"""
+    """MAKE THE DIRECTORY KEYS WITH KEY PUBLIC AND PRIVATE FOR ENCRYPT PASSWD IN DB
+    
+    if don't indentify a dir 'key' in the cod he will make with the keys public and private
+    """
 
     if value:
         return

@@ -2,11 +2,14 @@ inserir o cod dentro de uma funçao para que não pare ate o user pedir para par
 printar a lista de contas salvas para não digitar o email completo [OK] 
 inserir uma função para criar uma senha aleatória [OK]
 refatorar o codigo [] ......
-consulta inexistente re-exibir com a variavel salva para inserir no save [] 
+consulta inexistente re-exibir com a variavel salva para inserir no save [FALSE] 
 inserir hash no banco de dados para evitar possiveis intrusos [FALSE]
 melhorar o print (tirar o print de tuplas )[OK]
-verificar se os hash pode dar problema com o armazenamento [OK]
+verificar se os resultados do rsa pode dar problema com o armazenamento [FALSE]
 fazer ele ler se há as keys [OK]
 verificar boas praticas do psycopg2[]
 verificar novas formas de avaliar valores [] ... 
+verificar como um gerenciador de senhas armazena as senhas [] é por validação ? 
+adicionar uma master key [] ? 
+inserir docstrings [OK]
 

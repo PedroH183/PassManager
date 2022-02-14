@@ -2,12 +2,19 @@
 # FUNÇÕES DO COD 
 
 import encrypt as enc
-import inicio
+import config
 from pyperclip import copy
 from randomPass import rd_pass
 
 def save(conn,cur):
-    """SAVE A ACCOUNT IN DATABASE"""
+
+    """SAVE A ACCOUNT IN DATABASE
+    
+    email == str, the email is value for storage your user with app_name 
+    app == str, is the name of application that you wants save 
+    senha == str, is the password random that will storaged in DB with encryptation
+
+    """
     
     while True:
 
@@ -23,7 +30,7 @@ def save(conn,cur):
     
     senha = rd_pass() # senha aleatória
     copy(senha)
-    senha = enc.encrypt(senha) # encriptação 
+    senha = enc.encrypt(senha) # encrypt the password random 
 
     cur.execute(f"INSERT INTO contas(email,senha,app_name) VALUES ('{email}', '{senha}', '{app}')")
     conn.commit()
@@ -33,7 +40,12 @@ def save(conn,cur):
     return 
 
 def delete(conn,cur):
-    """DELETE ACCOUNT IN DATABASE BY ID"""
+
+    """DELETE ACCOUNT IN DATABASE BY ID
+    
+    Cod is a int values asked is also id in DB that is more comfortable digit the id that email 
+
+    """
 
     dados = printer(conn, cur) # print account storaged
 
@@ -59,7 +71,16 @@ def delete(conn,cur):
         
 
 def printer(conn,cur):
-    """PRINT THE VALUES STORAGED IN DB"""
+
+    """PRINT THE VALUES STORAGED IN DB
+    
+    Is default query for not need repeat query in all definitations and not print the value encrypt of db
+    because he's a massive length of characters 
+
+
+    returns dados
+
+    """
 
     cur.execute(f'SELECT id, email FROM contas')
     dados = cur.fetchall() # tuple return
@@ -69,13 +90,19 @@ def printer(conn,cur):
         re_run(conn,cur)
 
     print('*'*25+ 'Contas' +'*'*25)
-    [print(list(row)) for row in dados]    
+    [print(list(row)) for row in dados]  # print all values in dados   
     print('*'*25+ 'Contas' +'*'*25)
 
     return dados
 
 def query(conn,cur):
-    """CONSULT THE VALUES STORAGED IN DB FOR COPY PASSWORD"""
+
+    """CONSULT THE VALUES STORAGED IN DB FOR COPY PASSWORD
+    
+    datas will storage all id's valid for avaible conta input that if not in datas will repeat the loop
+    also decrypts the password storaged in db and copy for clipboard 
+
+    """
 
     printer(conn,cur) # take id return of contas table
 
@@ -99,8 +126,8 @@ def query(conn,cur):
             print('DIGITE UM ID VÁLIDO')
             continue
 
-        cur.execute(f"SELECT senha FROM contas WHERE id = '{conta}';") # error ???
-        passw = cur.fetchone() # avaliar funcionamento
+        cur.execute(f"SELECT senha FROM contas WHERE id = '{conta}';")
+        passw = cur.fetchone()
         passw = passw[0]
             
         passw = enc.decrypt(passw) # tupla de lista
@@ -112,7 +139,13 @@ def query(conn,cur):
 
     
 def re_run(conn, cur):
-    """ASK IF WANT RE RUN THE PROGRAM"""
+
+    """ASK IF WANT RE RUN THE PROGRAM
+    
+    choice is a value positive and negative for re-run the program 
+    don't have return because will exit or possible error of logical 
+
+    """
 
     while True:
 
@@ -123,7 +156,7 @@ def re_run(conn, cur):
             continue
 
         if desire == 'y':
-            escolha = inicio.opcao()
+            escolha = config.opcao()
             run(conn, cur, escolha) # database.py
 
         elif desire == 'n':
@@ -132,18 +165,12 @@ def re_run(conn, cur):
             exit('Bye...')
         
         else:
-            erro()
-        
+            print(f"""ERRO AO TENTAR RE-EXECUTAR O PROGRAMA""")
+            exit('BYE...')
 
 
-def erro():
-    """ERROR BETWEEN RUN THE PROGRAM"""
+def run(conn, cur, choice): # modificar 
 
-    print(f"""ERRO AO TENTAR RE-EXECUTAR O PROGRAMA""")
-    exit('BYE...')
-
-
-def run(conn, cur, choice): 
     """MAKE TABLE IN DB AND CALL THE FUNCTIONS FOR PROGRAM RUN"""
 
     cur.execute("""
@@ -151,7 +178,7 @@ def run(conn, cur, choice):
     id Serial,
     email varchar(30) NOT NULL,
     senha varchar NOT NULL,
-    app_name varchar(10) NOT NULL,
+    app_name varchar NOT NULL,
     PRIMARY KEY(id));""")
     conn.commit()
 
@@ -164,5 +191,4 @@ def run(conn, cur, choice):
     elif choice == '3': # COPY THE PASSWORD STORAGED IN DB
         query(conn,cur)
     
-
-    return 
+    re_run(conn,cur) # não cai no return
