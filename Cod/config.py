@@ -11,12 +11,12 @@ def entrada():
     pass_user = str, the password of your user registered in your data base
 
     returns the values for connect in main.py 
-
     """
 
     dbname = 'contas'
     usuario= 'tester'
     pass_user = '123456'
+
     return dbname, usuario, pass_user
 
 def opcao():

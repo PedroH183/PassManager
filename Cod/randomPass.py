@@ -5,14 +5,15 @@ import random as rd
 import string as st
 
 def rd_pass():
+
     """RETURN A RANDOM PASSWORD WITH LETTER, DIGITS AND PUNCTUATION"""
     
     letters = st.ascii_letters
     digits = st.digits
     punctuation = st.punctuation
 
-    # senha com 8 ou mais caracteres
-    len_letter = rd.randint(8,10)
+    # senhas de 8 a 10 caracter's
+    len_letter = rd.randint(10,12)
     len_digits = rd.randint(4,6)
     len_simbol = rd.randint(3,5)
     

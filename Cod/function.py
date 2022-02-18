@@ -10,9 +10,9 @@ def save(conn,cur):
 
     """SAVE A ACCOUNT IN DATABASE
     
-    email == str, the email is value for storage your user with app_name 
-    app == str, is the name of application that you wants save 
-    senha == str, is the password random that will storaged in DB with encryptation
+    email input == str, the email is value for storage your user with app_name 
+    app input == str, is the name of application that you wants save 
+    senha output == str, is the password random that will storaged in DB with encryptation
 
     """
     
@@ -79,7 +79,6 @@ def printer(conn,cur):
 
 
     returns dados
-
     """
 
     cur.execute(f'SELECT id, email FROM contas')

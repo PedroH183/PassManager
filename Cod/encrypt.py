@@ -7,14 +7,18 @@ import base64 as bs
 
 
 def encrypt(passwd): # using public key 
+
     """ENCRYPT THE PASSWORD FOR STORAGE IN DATABASE
     
     returns the password encrypted with rsa and encode with 32 base 
     """
 
     passwd = passwd.encode()
-    
-    with open('./Cod\keys\pubkey.pem', mode='rb') as pub:
+
+    ## verificando o cwd da execução do programa por causa do path relativo
+    print(f'esse é o path :: {os.getcwd()}')
+
+    with open('./pubkey.pem', mode='rb') as pub:
         pub = rsa.PublicKey.load_pkcs1(pub.read())
 
     encry_pass = rsa.encrypt(passwd, pub)
@@ -26,6 +30,7 @@ def encrypt(passwd): # using public key
 
 
 def decrypt(passwd): # using private key
+
     """DECRYPT THE PASSWORD STORAGED IN DB
     
     returns decrypt password storaged in db and decode the 32 base for copy for clipboard
@@ -33,7 +38,7 @@ def decrypt(passwd): # using private key
 
     passwd = passwd.encode()
 
-    with open('./Cod\keys\privkey.pem', mode='rb') as priv:
+    with open('./privkey.pem', mode='rb') as priv:
         priv = rsa.PrivateKey.load_pkcs1(priv.read())
     
     decrypt_pass = bs.b32decode(passwd)
@@ -43,18 +48,20 @@ def decrypt(passwd): # using private key
     return decrypt_pass
 
 def generatekeys_save(value):
+
     """MAKE THE DIRECTORY KEYS WITH KEY PUBLIC AND PRIVATE FOR ENCRYPT PASSWD IN DB
     
-    if don't indentify a dir 'key' in the cod he will make with the keys public and private
+    if don't indentify a dir 'key' in the cod he will make with the public and private key
     """
 
     if value:
         return
 
-    (pubKey,privKey) = rsa.newkeys(2048)
+    (pubKey,privKey) = rsa.newkeys(2048) # você pode alterar para numeros maiores, mas verá que o cod ficará mais lento
 
     os.makedirs(os.getcwd()+'\\Cod\\keys') # create all directorys to the keys
     os.chdir('Cod\keys')
+    # ele fica nesse diretório até o programa encerrar  
 
     with open('pubkey.pem', mode='ab+') as file: # create file pub and priv keys in dir keys ...
         file.write(pubKey.save_pkcs1('PEM'))

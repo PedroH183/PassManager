@@ -1,7 +1,7 @@
 inserir o cod dentro de uma funçao para que não pare ate o user pedir para parar [OK]
 printar a lista de contas salvas para não digitar o email completo [OK] 
 inserir uma função para criar uma senha aleatória [OK]
-refatorar o codigo [] ......
+refatorar o codigo [OK] ......
 consulta inexistente re-exibir com a variavel salva para inserir no save [FALSE] 
 inserir hash no banco de dados para evitar possiveis intrusos [FALSE]
 melhorar o print (tirar o print de tuplas )[OK]
@@ -12,4 +12,3 @@ verificar novas formas de avaliar valores [] ...
 verificar como um gerenciador de senhas armazena as senhas [] é por validação ? 
 adicionar uma master key [] ? 
 inserir docstrings [OK]
-
