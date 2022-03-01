@@ -24,9 +24,7 @@ def save(conn,cur):
         if (email == '' or app == ''):
             print('não deixe campos em branco')
             continue
-        
-        else:
-            break
+        break
     
     senha = rd_pass() # senha aleatória
     copy(senha)
@@ -38,6 +36,7 @@ def save(conn,cur):
     print('CONTA SALVA E SENHA COPIADA')
 
     return 
+
 
 def delete(conn,cur):
 
@@ -93,6 +92,7 @@ def printer(conn,cur):
     print('*'*25+ 'Contas' +'*'*25)
 
     return dados
+
 
 def query(conn,cur):
 

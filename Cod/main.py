@@ -14,7 +14,7 @@ from function import run
 
 dbname, usuario, pass_user = entrada()
 print('Verificando se há chaves salvas')
-value = os.path.isdir(os.getcwd() + '.\Cod\\keys') # procurar o diretório chave 
+value = os.path.isdir(os.getcwd() + './Cod\\keys') # procurar o diretório chave 
 generatekeys_save(value) # gerar as chaves e criar o diretório para elas 
 
 ################# CONNECT DB ################

@@ -16,9 +16,7 @@ def encrypt(passwd): # using public key
     passwd = passwd.encode()
 
     ## verificando o cwd da execução do programa por causa do path relativo
-    print(f'esse é o path :: {os.getcwd()}')
-
-    with open('./pubkey.pem', mode='rb') as pub:
+    with open('./Cod\\keys\\pubkey.pem', mode='rb') as pub:
         pub = rsa.PublicKey.load_pkcs1(pub.read())
 
     encry_pass = rsa.encrypt(passwd, pub)
@@ -38,7 +36,7 @@ def decrypt(passwd): # using private key
 
     passwd = passwd.encode()
 
-    with open('./privkey.pem', mode='rb') as priv:
+    with open('./Cod\\keys\\privkey.pem', mode='rb') as priv:
         priv = rsa.PrivateKey.load_pkcs1(priv.read())
     
     decrypt_pass = bs.b32decode(passwd)
@@ -47,6 +45,7 @@ def decrypt(passwd): # using private key
     
     return decrypt_pass
 
+
 def generatekeys_save(value):
 
     """MAKE THE DIRECTORY KEYS WITH KEY PUBLIC AND PRIVATE FOR ENCRYPT PASSWD IN DB
@@ -54,19 +53,23 @@ def generatekeys_save(value):
     if don't indentify a dir 'key' in the cod he will make with the public and private key
     """
 
-    if value:
+    if value: # se houver algum diretório no cwd chamado keys ele vai ignorar a criação de novas chaves!! 
         return
 
-    (pubKey,privKey) = rsa.newkeys(2048) # você pode alterar para numeros maiores, mas verá que o cod ficará mais lento
+    print('Não há chaves salvas digite um valor de base 2 para ser o tamanho da key\nExemplo:\n[256,512,1024,2048,4096]\nEscolha padrão press enter')
+    tamanho_key = int(input())
 
-    os.makedirs(os.getcwd()+'\\Cod\\keys') # create all directorys to the keys
-    os.chdir('Cod\keys')
-    # ele fica nesse diretório até o programa encerrar  
+    if tamanho_key == '':
+        tamanho_key = 512 # ideal 
 
-    with open('pubkey.pem', mode='ab+') as file: # create file pub and priv keys in dir keys ...
+    (pubKey,privKey) = rsa.newkeys(tamanho_key) # você pode alterar para numeros maiores, mas verá que o cod ficará mais lento
+
+    os.makedirs(os.getcwd()+'\\Cod\\keys') # create all directorys to the keys 
+
+    with open('./Cod\\keys\\pubkey.pem', mode='ab+') as file: # create file pub and priv keys in dir keys ...
         file.write(pubKey.save_pkcs1('PEM'))
     
-    with open('privkey.pem', mode='ab+') as file:
+    with open('./Cod\\keys\\privkey.pem', mode='ab+') as file:
         file.write(privKey.save_pkcs1('PEM'))
     
     return

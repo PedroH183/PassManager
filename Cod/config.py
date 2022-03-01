@@ -44,7 +44,6 @@ Escolha uma função para o programa
         if escolha not in list_choice:
             print('INSIRA UM VALOR VÁLIDO !!')
             continue
-        else:
-            break
+        break
         
     return escolha
