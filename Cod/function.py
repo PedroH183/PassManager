@@ -13,6 +13,7 @@ def save(conn,cur):
     email input == str, the email is value for storage your user with app_name 
     app input == str, is the name of application that you wants save 
     senha output == str, is the password random that will storaged in DB with encryptation
+    pass_ask == str asking if has a password create in site 
 
     """
     
@@ -20,15 +21,27 @@ def save(conn,cur):
 
         email = str(input('Digite o email que deseja salvar\n'))
         app = str(input('Digite o nome do site que deseja salvar\n'))
+        pass_ask = str(input('Já possui senha? \n[Y/N]')).lower()
 
-        if (email == '' or app == ''):
+        conditions = [
+            email == '',
+            app == '',
+            pass_ask not in ['y','n']
+        ]
+
+        if any(conditions):
             print('não deixe campos em branco')
             continue
         break
     
-    senha = rd_pass() # senha aleatória
-    copy(senha)
-    senha = enc.encrypt(senha) # encrypt the password random 
+    if pass_ask == 'y': # positive case 
+        senha = str(input('Digite a senha para armazenar no DB\n'))
+        senha = enc.encrypt(senha)
+
+    else: # negative case 
+        senha = rd_pass() # senha aleatória
+        copy(senha)
+        senha = enc.encrypt(senha) # encrypt the password random 
 
     cur.execute(f"INSERT INTO contas(email,senha,app_name) VALUES ('{email}', '{senha}', '{app}')")
     conn.commit()
