@@ -6,6 +6,7 @@ import config
 from pyperclip import copy
 from randomPass import rd_pass
 
+
 def save(conn,cur):
 
     """SAVE A ACCOUNT IN DATABASE
@@ -36,7 +37,7 @@ def save(conn,cur):
     
     if pass_ask == 'y': # positive case 
         senha = str(input('Digite a senha para armazenar no DB\n'))
-        senha = enc.encrypt(senha)
+        senha = enc.encrypt(senha)  # encrypt a password existing
 
     else: # negative case 
         senha = rd_pass() # senha aleatória

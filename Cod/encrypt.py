@@ -64,7 +64,7 @@ def generatekeys_save(value):
 
     (pubKey,privKey) = rsa.newkeys(tamanho_key) # você pode alterar para numeros maiores, mas verá que o cod ficará mais lento
 
-    os.makedirs(os.getcwd()+'\\Cod\\keys') # create all directorys to the keys 
+    os.mkdir('./Cod\\keys') # create all directorys to the keys 
 
     with open('./Cod\\keys\\pubkey.pem', mode='ab+') as file: # create file pub and priv keys in dir keys ...
         file.write(pubKey.save_pkcs1('PEM'))
